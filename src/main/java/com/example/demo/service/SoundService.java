@@ -16,7 +16,7 @@ public class SoundService {
         this.soundRepos = soundRepos;
     }
 
-    public List<Sound> getUsers() throws ExecutionException, InterruptedException {
-        return soundRepos.getUsers();
+    public List<Sound> getSounds() throws ExecutionException, InterruptedException {
+        return soundRepos.getSounds();
     }
 }

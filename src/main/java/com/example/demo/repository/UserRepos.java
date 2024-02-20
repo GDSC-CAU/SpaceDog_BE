@@ -1,6 +1,7 @@
 package com.example.demo.repository;
 
 import com.example.demo.domain.Sound;
+import com.example.demo.domain.User;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
@@ -15,16 +16,16 @@ import java.util.concurrent.ExecutionException;
 
 @Repository
 @Slf4j
-public class SoundRepos {
-    public static final String COLLECTION_NAME = "sounds";
+public class UserRepos {
+    public static final String COLLECTION_NAME = "users";
 
-    public List<Sound> getSounds() throws ExecutionException, InterruptedException {
-        List<Sound> list = new ArrayList<>();
+    public List<User> getUsers() throws ExecutionException, InterruptedException {
+        List<User> list = new ArrayList<>();
         Firestore db = FirestoreClient.getFirestore();
         ApiFuture<QuerySnapshot> future = db.collection(COLLECTION_NAME).get();
         List<QueryDocumentSnapshot> documents = future.get().getDocuments();
         for (QueryDocumentSnapshot document : documents) {
-            list.add(document.toObject(Sound.class));
+            list.add(document.toObject(User.class));
         }
         return list;
     }
