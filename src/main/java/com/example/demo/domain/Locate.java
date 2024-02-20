@@ -10,9 +10,10 @@ import lombok.ToString;
 @ToString
 @Getter
 @Setter
-public class Sound {
+public class Locate {
     @DocumentId
     private String id;
     private String user_id;
-    private float sound;
+    private Float longitude;
+    private Float latitude;
 }

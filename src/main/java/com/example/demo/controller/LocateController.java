@@ -1,9 +1,10 @@
 package com.example.demo.controller;
 
+import com.example.demo.domain.Locate;
 import com.example.demo.domain.Sound;
+import com.example.demo.service.LocateService;
 import com.example.demo.service.SoundService;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,18 +14,18 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 @RestController
-@RequestMapping( value = "/sound",  produces = "application/json;charset=utf8")
-@Tag(name = "소리 상태 API")
-public class SoundController {
-    private final SoundService soundService;
+@RequestMapping( value = "/locates",  produces = "application/json;charset=utf8")
+@Tag(name = "위치 상태 API")
+public class LocateController {
+    private final LocateService locateService;
 
-    public SoundController(SoundService soundService) {
-        this.soundService = soundService;
+    public LocateController(LocateService locateervice) {
+        this.locateService = locateervice;
     }
 
     @GetMapping
-    public ResponseEntity<Object> getSounds() throws ExecutionException, InterruptedException {
-        List<Sound> list = soundService.getSounds();
+    public ResponseEntity<Object> getLocates() throws ExecutionException, InterruptedException {
+        List<Locate> list = locateService.getLocates();
         return ResponseEntity.ok().body(list);
     }
 }

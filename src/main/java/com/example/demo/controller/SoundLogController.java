@@ -24,7 +24,7 @@ public class SoundLogController {
     }
 
     @GetMapping
-    public ResponseEntity<Object> getUsers() throws ExecutionException, InterruptedException {
+    public ResponseEntity<Object> getLogs() throws ExecutionException, InterruptedException {
         List<SoundLog> list = soundLogService.getSoundLogs();
         return ResponseEntity.ok().body(list);
     }
