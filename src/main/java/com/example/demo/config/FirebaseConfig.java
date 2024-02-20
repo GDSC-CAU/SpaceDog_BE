@@ -14,7 +14,7 @@ public class FirebaseConfig {
     @PostConstruct
     public void init() {
         try {
-            FileInputStream serviceAccount = new FileInputStream("src/main/resources/config/key/spacedog-414600-firebase-adminsdk-l3zqd-1bb47d2f5e.json");
+            FileInputStream serviceAccount = new FileInputStream("src/main/resources/config/key/serviceAccountKey.json");
             FirebaseOptions.Builder optionBuilder = FirebaseOptions.builder();
             FirebaseOptions options = optionBuilder
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
