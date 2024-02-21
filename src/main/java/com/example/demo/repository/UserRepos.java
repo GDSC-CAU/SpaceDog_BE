@@ -3,6 +3,7 @@ package com.example.demo.repository;
 import com.example.demo.domain.Sound;
 import com.example.demo.domain.User;
 import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
@@ -28,5 +29,11 @@ public class UserRepos {
             list.add(document.toObject(User.class));
         }
         return list;
+    }
+
+    public String createUser(User user) throws ExecutionException, InterruptedException {
+        Firestore db = FirestoreClient.getFirestore();
+        DocumentReference addedDocRef = db.collection(COLLECTION_NAME).add(user).get();
+        return addedDocRef.getId();
     }
 }
