@@ -1,6 +1,7 @@
 package com.example.demo.dto.locate;
 
 import com.example.demo.domain.Locate;
+import com.google.cloud.Timestamp;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
@@ -33,6 +34,7 @@ public class LocateInfoDTO {
         l.setUser_id(userId);
         l.setLatitude(this.latitude);
         l.setLongitude(this.longitude);
+        l.setCurrent_time(Timestamp.now());
         return l;
     }
 }

@@ -1,10 +1,13 @@
 package com.example.demo.domain;
 
+import com.google.cloud.Timestamp;
 import com.google.cloud.firestore.annotation.DocumentId;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+
+import java.sql.Time;
 
 @NoArgsConstructor
 @ToString
@@ -16,6 +19,16 @@ public class Locate {
     private String user_id;
     private Float longitude;
     private Float latitude;
+
+    private Timestamp current_time;
+
+    public Timestamp getCurrent_time() {
+        return current_time;
+    }
+
+    public void setCurrent_time(Timestamp current_time) {
+        this.current_time = current_time;
+    }
 
     public String getId() {
         return id;
