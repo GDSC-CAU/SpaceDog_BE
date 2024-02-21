@@ -6,8 +6,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Schema(title = "사용자 등록 result")
-public class UserCreateRes {
+@Schema(title = "사용자 번호")
+public class UserIdDTO {
     private String user_id;
 
     public String getUser_id() {

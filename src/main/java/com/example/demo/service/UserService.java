@@ -2,7 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.domain.User;
 import com.example.demo.dto.user.UserCreateReq;
-import com.example.demo.dto.user.UserCreateRes;
+import com.example.demo.dto.user.UserIdDTO;
 import com.example.demo.repository.UserRepos;
 import org.springframework.stereotype.Service;
 
@@ -21,11 +21,16 @@ public class UserService {
         return userRepos.getUsers();
     }
 
-    public UserCreateRes createUser(UserCreateReq dto) throws ExecutionException, InterruptedException {
+    public UserIdDTO createUser(UserCreateReq dto) throws ExecutionException, InterruptedException {
         User newUser = dto.toUser();
         String userId = userRepos.createUser(newUser);
-        UserCreateRes res = new UserCreateRes();
+        UserIdDTO res = new UserIdDTO();
         res.setUser_id(userId);
         return res;
+    }
+
+    public User getUserByUserId(String userId) throws ExecutionException, InterruptedException {
+        User user = userRepos.getUserById(userId);
+        return user;
     }
 }

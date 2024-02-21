@@ -3,10 +3,7 @@ package com.example.demo.repository;
 import com.example.demo.domain.Sound;
 import com.example.demo.domain.User;
 import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.DocumentReference;
-import com.google.cloud.firestore.Firestore;
-import com.google.cloud.firestore.QueryDocumentSnapshot;
-import com.google.cloud.firestore.QuerySnapshot;
+import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
@@ -35,5 +32,17 @@ public class UserRepos {
         Firestore db = FirestoreClient.getFirestore();
         DocumentReference addedDocRef = db.collection(COLLECTION_NAME).add(user).get();
         return addedDocRef.getId();
+    }
+
+    public User getUserById(String userId) throws ExecutionException, InterruptedException {
+        Firestore db = FirestoreClient.getFirestore();
+        DocumentSnapshot document = db.collection(COLLECTION_NAME).document(userId).get().get(); // 사용자 문서 가져오기
+        if (document.exists()) {
+            // 문서가 존재하면 해당 사용자 정보를 반환
+            return document.toObject(User.class);
+        } else {
+            // 문서가 존재하지 않으면 null 반환
+            return null;
+        }
     }
 }

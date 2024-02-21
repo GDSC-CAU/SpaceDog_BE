@@ -2,7 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.domain.User;
 import com.example.demo.dto.user.UserCreateReq;
-import com.example.demo.dto.user.UserCreateRes;
+import com.example.demo.dto.user.UserIdDTO;
 import com.example.demo.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -31,12 +31,32 @@ public class UserController {
 
     @Operation(summary = "회원 등록")
     @PostMapping("/register")
-    public ResponseEntity<UserCreateRes> createUser(@RequestBody UserCreateReq userCreateReq)  throws ExecutionException, InterruptedException{
+    public ResponseEntity<UserIdDTO> createUser(@RequestBody UserCreateReq userCreateReq)  throws ExecutionException, InterruptedException{
         try {
-            UserCreateRes userCreateRes = userService.createUser(userCreateReq);
-            return ResponseEntity.ok(userCreateRes);
+            UserIdDTO userIdDTO = userService.createUser(userCreateReq);
+            return ResponseEntity.ok(userIdDTO);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @Operation(summary = "회원 정보 조회")
+    @GetMapping("/{userId}")
+    public ResponseEntity<User> getUserById(@PathVariable String userId) {
+        try {
+            // userId를 사용하여 사용자 정보 조회
+            User user = userService.getUserByUserId(userId);
+
+            if (user != null) {
+                // 사용자 정보를 찾았을 경우, 해당 정보를 응답으로 반환
+                return ResponseEntity.ok(user);
+            } else {
+                // 사용자 정보를 찾지 못한 경우, 404 Not Found 반환
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            // 예외 발생 시, 500 Internal Server Error 반환
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
 }
