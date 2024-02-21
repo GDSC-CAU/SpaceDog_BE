@@ -3,6 +3,7 @@ package com.example.demo.repository;
 import com.example.demo.domain.Locate;
 import com.example.demo.domain.SoundLog;
 import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
@@ -29,5 +30,11 @@ public class LocateRepos {
             list.add(document.toObject(Locate.class));
         }
         return list;
+    }
+
+    public String createLocate(Locate locate) throws ExecutionException, InterruptedException {
+        Firestore db = FirestoreClient.getFirestore();
+        DocumentReference addedDocRef = db.collection(COLLECTION_NAME).add(locate).get();
+        return addedDocRef.getId();
     }
 }

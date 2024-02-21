@@ -32,7 +32,7 @@ public class LocateInfoDTO {
         Locate l = new Locate();
         l.setUser_id(userId);
         l.setLatitude(this.latitude);
-        l.setLatitude(this.longitude);
+        l.setLongitude(this.longitude);
         return l;
     }
 }
