@@ -30,7 +30,7 @@ public class SoundLogRepos {
 
     public List<SoundLog> getSoundLogsByUserId(String userId) throws ExecutionException, InterruptedException {
         Firestore db = FirestoreClient.getFirestore();
-        Query query = db.collection("soundLogs").whereEqualTo("user_id", userId);
+        Query query = db.collection(COLLECTION_NAME).whereEqualTo("user_id", userId);
         ApiFuture<QuerySnapshot> querySnapshot = query.get();
         List<QueryDocumentSnapshot> documents = querySnapshot.get().getDocuments();
 
@@ -40,4 +40,12 @@ public class SoundLogRepos {
         }
         return soundLogs;
     }
+
+    public String createSoundLog(SoundLog soundLog) throws ExecutionException, InterruptedException {
+        Firestore db = FirestoreClient.getFirestore();
+        DocumentReference addedDocRef = db.collection(COLLECTION_NAME).add(soundLog).get();
+        return addedDocRef.getId();
+    }
+
+
 }

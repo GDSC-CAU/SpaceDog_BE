@@ -2,6 +2,8 @@ package com.example.demo.service;
 
 import com.example.demo.domain.Sound;
 import com.example.demo.domain.SoundLog;
+import com.example.demo.dto.soundLog.LogIdDTO;
+import com.example.demo.dto.soundLog.SoundDTO;
 import com.example.demo.repository.SoundLogRepos;
 import com.example.demo.repository.SoundRepos;
 import org.springframework.stereotype.Service;
@@ -24,5 +26,12 @@ public class SoundLogService {
     public List<SoundLog> getSoundLogsByUserId(String userId) throws ExecutionException, InterruptedException {
         List<SoundLog> soundLogs = soundLogRepos.getSoundLogsByUserId(userId);
         return soundLogs;
+    }
+
+    public LogIdDTO createSoundLog(SoundDTO dto, String userId) throws ExecutionException, InterruptedException {
+        String soundLogId = soundLogRepos.createSoundLog(dto.toSoundLog(userId));
+        LogIdDTO res = new LogIdDTO();
+        res.setLogId(soundLogId);
+        return res;
     }
 }
