@@ -1,7 +1,9 @@
 package com.example.demo.repository;
 
+import com.example.demo.domain.Locate;
 import com.example.demo.domain.Sound;
 import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
@@ -27,5 +29,11 @@ public class SoundRepos {
             list.add(document.toObject(Sound.class));
         }
         return list;
+    }
+
+    public String createSound(Sound sound) throws ExecutionException, InterruptedException {
+        Firestore db = FirestoreClient.getFirestore();
+        DocumentReference addedDocRef = db.collection(COLLECTION_NAME).add(sound).get();
+        return addedDocRef.getId();
     }
 }

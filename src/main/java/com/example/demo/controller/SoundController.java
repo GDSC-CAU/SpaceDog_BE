@@ -1,13 +1,15 @@
 package com.example.demo.controller;
 
 import com.example.demo.domain.Sound;
+import com.example.demo.dto.locate.LocateInfoDTO;
+import com.example.demo.dto.sound.SoundInfoDTO;
 import com.example.demo.service.SoundService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -26,5 +28,17 @@ public class SoundController {
     public ResponseEntity<Object> getSounds() throws ExecutionException, InterruptedException {
         List<Sound> list = soundService.getSounds();
         return ResponseEntity.ok().body(list);
+    }
+
+    @Operation(summary = "소리 등록")
+    @PostMapping("/{userId}")
+    public ResponseEntity<String> createLocate(@PathVariable String userId, @RequestBody SoundInfoDTO soundInfoDTO) {
+        try {
+            // SoundLog를 생성하고 해당 ID를 반환
+            String soundId = soundService.createSound(soundInfoDTO, userId);
+            return ResponseEntity.ok().body(soundId);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 }
