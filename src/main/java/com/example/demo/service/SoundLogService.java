@@ -20,4 +20,9 @@ public class SoundLogService {
     public List<SoundLog> getSoundLogs() throws ExecutionException, InterruptedException {
         return soundLogRepos.getSoundLogs();
     }
+
+    public List<SoundLog> getSoundLogsByUserId(String userId) throws ExecutionException, InterruptedException {
+        List<SoundLog> soundLogs = soundLogRepos.getSoundLogsByUserId(userId);
+        return soundLogs;
+    }
 }

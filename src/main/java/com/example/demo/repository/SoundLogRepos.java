@@ -3,9 +3,7 @@ package com.example.demo.repository;
 import com.example.demo.domain.Sound;
 import com.example.demo.domain.SoundLog;
 import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.Firestore;
-import com.google.cloud.firestore.QueryDocumentSnapshot;
-import com.google.cloud.firestore.QuerySnapshot;
+import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
@@ -28,5 +26,18 @@ public class SoundLogRepos {
             list.add(document.toObject(SoundLog.class));
         }
         return list;
+    }
+
+    public List<SoundLog> getSoundLogsByUserId(String userId) throws ExecutionException, InterruptedException {
+        Firestore db = FirestoreClient.getFirestore();
+        Query query = db.collection("soundLogs").whereEqualTo("user_id", userId);
+        ApiFuture<QuerySnapshot> querySnapshot = query.get();
+        List<QueryDocumentSnapshot> documents = querySnapshot.get().getDocuments();
+
+        List<SoundLog> soundLogs = new ArrayList<>();
+        for (DocumentSnapshot document : documents) {
+            soundLogs.add(document.toObject(SoundLog.class));
+        }
+        return soundLogs;
     }
 }
