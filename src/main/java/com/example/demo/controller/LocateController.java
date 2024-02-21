@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.domain.Locate;
 import com.example.demo.domain.Sound;
+import com.example.demo.domain.SoundLog;
 import com.example.demo.dto.locate.LocateInfoDTO;
 import com.example.demo.dto.soundLog.LogIdDTO;
 import com.example.demo.dto.soundLog.SoundDTO;
@@ -42,6 +43,19 @@ public class LocateController {
             String locateId = locateService.createLocate(locateInfoDTO, userId);
             return ResponseEntity.ok().body(locateId);
         } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @Operation(summary = "위치 조회")
+    @GetMapping("/{userId}")
+    public ResponseEntity<Locate> getSoundLogsByUserId(@PathVariable String userId) {
+        try {
+            System.out.println("dd");
+            Locate locate = locateService.getLatestLocate(userId);
+            return ResponseEntity.ok(locate);
+        } catch (Exception e) {
+            System.out.println(e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }

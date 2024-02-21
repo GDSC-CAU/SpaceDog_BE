@@ -26,9 +26,13 @@ public class LocateService {
     }
 
     public String createLocate(LocateInfoDTO dto, String userId) throws ExecutionException, InterruptedException {
-        Locate l = new Locate();
-        l = dto.toLocate(userId);
+        Locate l = dto.toLocate(userId);
         String locateId = locateRepos.createLocate(l);
         return locateId;
+    }
+
+    public Locate getLatestLocate(String userId) throws ExecutionException, InterruptedException {
+        Locate loc = locateRepos.getLatestLocateByUserId(userId);
+        return loc;
     }
 }
